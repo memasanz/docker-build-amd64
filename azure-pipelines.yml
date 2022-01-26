@@ -32,6 +32,13 @@ stages:
     pool:
       vmImage: $(vmImageName)
     steps:
+    - task: AzureCLI@2
+      displayName: 'Install AML CLI'
+      inputs:
+        azureSubscription: $(ml-ws-connection)
+        scriptLocation: inlineScript
+        scriptType: 'bash'
+        inlineScript: 'docker run --rm --privileged multiarch/qemu-user-static --reset -p yes'
     - task: Docker@2
       displayName: Build and push an image to container registry
       inputs:
