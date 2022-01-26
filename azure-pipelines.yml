@@ -21,7 +21,7 @@ variables:
 pool: 
    name: megan
    demands:
-    - agent.name -equals memasanzb2
+    - agent.name -equals meganlinux
 
 stages:
 - stage: Build
