@@ -1,0 +1,43 @@
+# Docker
+# Build and push an image to Azure Container Registry
+# https://docs.microsoft.com/azure/devops/pipelines/languages/docker
+
+trigger:
+- main
+
+resources:
+- repo: self
+
+variables:
+  # Container registry service connection established during pipeline creation
+  dockerRegistryServiceConnection: '1e30936d-b41b-4b08-ab80-854f81221082'
+  imageRepository: 'memasanzdockerbuild'
+  containerRegistry: 'mmvisionacr.azurecr.io'
+  dockerfilePath: '$(Build.SourcesDirectory)/modules/classifier/Dockerfile.amd64'
+  tag: '$(Build.BuildId)'
+  vmImageName: 'ubuntu-latest'
+
+
+pool: 
+   name: megan
+   demands:
+    - agent.name -equals memasanzb2
+
+stages:
+- stage: Build
+  displayName: Build and push stage
+  jobs:
+  - job: Build
+    displayName: Build
+    pool:
+      vmImage: $(vmImageName)
+    steps:
+    - task: Docker@2
+      displayName: Build and push an image to container registry
+      inputs:
+        command: buildAndPush
+        repository: $(imageRepository)
+        dockerfile: $(dockerfilePath)
+        containerRegistry: $(dockerRegistryServiceConnection)
+        tags: |
+          $(tag)
