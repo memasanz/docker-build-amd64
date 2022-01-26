@@ -13,7 +13,7 @@ variables:
   dockerRegistryServiceConnection: '1e30936d-b41b-4b08-ab80-854f81221082'
   imageRepository: 'memasanzdockerbuild'
   containerRegistry: 'mmvisionacr.azurecr.io'
-  dockerfilePath: '$(Build.SourcesDirectory)/modules/classifier/Dockerfile.amd64'
+  dockerfilePath: '$(Build.SourcesDirectory)/modules/classifier/Dockerfile.arm64v8'
   tag: '$(Build.BuildId)'
   vmImageName: 'ubuntu-latest'
 
